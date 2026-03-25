@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
-import Experience from './components/Experience'
+import Skills from './components/Skills'
 import Projects from './components/Projects'
+import Experience from './components/Experience'
 import Contact from './components/Contact'
 
 function App() {
   useEffect(() => {
-    // Smooth scroll behavior
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a')
       if (target && target.hash && target.hash.startsWith('#')) {
@@ -30,12 +30,14 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Experience />
+        <Skills />
         <Projects />
+        <Experience />
         <Contact />
       </main>
-      <footer className="py-8 text-center text-gray-400 border-t border-white/10">
-        <p className="text-sm">© 2024 Rohit. All rights reserved.</p>
+      <footer className="py-6 md:py-8 text-center text-gray-400 border-t border-white/10">
+        <p className="text-xs md:text-sm">© 2024 Rohit Tiwari. All rights reserved.</p>
+        <p className="text-xs text-gray-500 mt-1">Built with React & TailwindCSS</p>
       </footer>
     </div>
   )
