@@ -7,7 +7,6 @@ const Hero = () => {
   const containerRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
   
-  // Check if mobile device
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -21,7 +20,6 @@ const Hero = () => {
   const mouseY = useMotionValue(0)
   
   const springConfig = { damping: 25, stiffness: 300 }
-  // Reduce 3D effect on mobile
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], isMobile ? [4, -4] : [8, -8]), springConfig)
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], isMobile ? [-4, 4] : [-8, 8]), springConfig)
   
@@ -38,7 +36,7 @@ const Hero = () => {
   }, [])
 
   const handleMouseMove = (e) => {
-    if (isMobile) return // Disable 3D effect on mobile
+    if (isMobile) return
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
@@ -61,17 +59,17 @@ const Hero = () => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       id="home" 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black pt-14 sm:pt-16"
+      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-black pt-14 sm:pt-16"
       style={{ perspective: "1000px" }}
     >
-      {/* Minimal Grey Gradient Background - Mobile Optimized */}
+      {/* Background Gradients */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-gray-800/20 rounded-full filter blur-[80px] sm:blur-[120px]"></div>
         <div className="absolute bottom-0 left-0 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-gray-900/30 rounded-full filter blur-[100px] sm:blur-[150px]"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] bg-yellow-500/5 rounded-full filter blur-[80px] sm:blur-[120px]"></div>
       </div>
 
-      {/* Large Moving Text Background - Hidden on Mobile for better performance */}
+      {/* Large Moving Text Background - Desktop only */}
       <motion.div 
         className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none overflow-hidden"
         style={{ x: textX, y: textY }}
@@ -95,46 +93,49 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 text-center relative z-10">
+      {/* Main Content - Centered properly */}
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
+          className="flex flex-col items-center justify-center w-full"
         >
-          {/* Image with Yellow Glow - Smaller on mobile */}
-          <motion.div
-            style={{
-              rotateX: isMobile ? 0 : rotateX,
-              rotateY: isMobile ? 0 : rotateY,
-              transformStyle: "preserve-3d",
-            }}
-            className="relative inline-block mb-5 sm:mb-6 md:mb-8"
-          >
+          {/* Image Container - Centered */}
+          <div className="flex justify-center items-center w-full mb-5 sm:mb-6 md:mb-8">
             <motion.div
-              className="absolute inset-0 rounded-full bg-yellow-400 opacity-20 blur-xl sm:blur-2xl"
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.2, 0.4, 0.2],
+              style={{
+                rotateX: isMobile ? 0 : rotateX,
+                rotateY: isMobile ? 0 : rotateY,
+                transformStyle: "preserve-3d",
               }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.3)] sm:shadow-[0_0_30px_rgba(234,179,8,0.3)]">
-              <img
-                src={images[imageIndex]}
-                alt="Rohit Tiwari"
-                className="w-full h-full object-cover"
+              className="relative inline-block"
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-yellow-400 opacity-20 blur-xl sm:blur-2xl"
+                animate={{
+                  scale: [1, 1.15, 1],
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            </div>
-          </motion.div>
+              
+              <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.3)] sm:shadow-[0_0_30px_rgba(234,179,8,0.3)] mx-auto">
+                <img
+                  src={images[imageIndex]}
+                  alt="Rohit Tiwari"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              </div>
+            </motion.div>
+          </div>
 
-          {/* Badge - Smaller on mobile */}
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,7 +146,7 @@ const Hero = () => {
             <span className="text-[10px] sm:text-xs text-gray-400 tracking-wide">AVAILABLE FOR WORK</span>
           </motion.div>
 
-          {/* Name with Yellow - Smaller text on mobile */}
+          {/* Name */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -167,7 +168,7 @@ const Hero = () => {
             </div>
           </motion.div>
           
-          {/* Description - Compact on mobile */}
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -180,7 +181,7 @@ const Hero = () => {
             <span className="text-yellow-500/80">WingEducation</span>
           </motion.p>
 
-          {/* CTA Buttons - Stacked on mobile, side by side on tablet+ */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -202,7 +203,7 @@ const Hero = () => {
             </a>
           </motion.div>
 
-          {/* Tech Stack - Wrapped properly on mobile */}
+          {/* Tech Stack */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -218,7 +219,7 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator - Smaller on mobile */}
+      {/* Scroll Indicator */}
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
