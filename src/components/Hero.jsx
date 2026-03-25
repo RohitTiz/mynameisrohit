@@ -20,11 +20,13 @@ const Hero = () => {
   const mouseY = useMotionValue(0)
   
   const springConfig = { damping: 25, stiffness: 300 }
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], isMobile ? [4, -4] : [8, -8]), springConfig)
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], isMobile ? [-4, 4] : [-8, 8]), springConfig)
+  // Reduced effect for mobile but still working
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], isMobile ? [2, -2] : [8, -8]), springConfig)
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], isMobile ? [-2, 2] : [-8, 8]), springConfig)
   
-  const textX = useSpring(useTransform(mouseX, [-0.5, 0.5], isMobile ? [-20, 20] : [-40, 40]), springConfig)
-  const textY = useSpring(useTransform(mouseY, [-0.5, 0.5], isMobile ? [-20, 20] : [-40, 40]), springConfig)
+  // Background text movement - works on both mobile and desktop
+  const textX = useSpring(useTransform(mouseX, [-0.5, 0.5], isMobile ? [-15, 15] : [-40, 40]), springConfig)
+  const textY = useSpring(useTransform(mouseY, [-0.5, 0.5], isMobile ? [-15, 15] : [-40, 40]), springConfig)
   
   const images = [profileImage, profileImage, profileImage]
 
@@ -36,22 +38,49 @@ const Hero = () => {
   }, [])
 
   const handleMouseMove = (e) => {
-    if (isMobile) return
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
     const normalizedX = (e.clientX - centerX) / (rect.width / 2)
     const normalizedY = (e.clientY - centerY) / (rect.height / 2)
-    mouseX.set(Math.min(Math.max(normalizedX, -0.4), 0.4))
-    mouseY.set(Math.min(Math.max(normalizedY, -0.4), 0.4))
+    mouseX.set(Math.min(Math.max(normalizedX, -0.5), 0.5))
+    mouseY.set(Math.min(Math.max(normalizedY, -0.5), 0.5))
   }
 
   const handleMouseLeave = () => {
-    if (isMobile) return
     mouseX.set(0)
     mouseY.set(0)
   }
+
+  // Responsive image size based on screen
+  const getImageSize = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth
+      if (width < 480) return 'w-32 h-32'      // Small phones
+      if (width < 640) return 'w-36 h-36'      // Large phones
+      if (width < 768) return 'w-40 h-40'      // Tablets
+      if (width < 1024) return 'w-44 h-44'     // Small desktops
+      return 'w-48 h-48'                        // Large desktops
+    }
+    return 'w-36 h-36'
+  }
+
+  const [imageSize, setImageSize] = useState('w-36 h-36')
+  
+  useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth
+      if (width < 480) setImageSize('w-32 h-32')
+      else if (width < 640) setImageSize('w-36 h-36')
+      else if (width < 768) setImageSize('w-40 h-40')
+      else if (width < 1024) setImageSize('w-44 h-44')
+      else setImageSize('w-48 h-48')
+    }
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
 
   return (
     <section 
@@ -69,24 +98,27 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] bg-yellow-500/5 rounded-full filter blur-[80px] sm:blur-[120px]"></div>
       </div>
 
-      {/* Large Moving Text Background - Desktop only */}
+      {/* Moving Background Text - Works on Mobile & Desktop */}
       <motion.div 
-        className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none overflow-hidden"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
         style={{ x: textX, y: textY }}
       >
         <div className="relative w-full h-full">
+          {/* Developer Text */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-[8rem] md:text-[12rem] lg:text-[15rem] font-black whitespace-nowrap text-gray-900/20 select-none tracking-wider">
+            <div className="text-[3rem] sm:text-[6rem] md:text-[8rem] lg:text-[12rem] xl:text-[15rem] font-black whitespace-nowrap text-gray-900/15 sm:text-gray-900/20 select-none tracking-wider">
               DEVELOPER
             </div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center translate-x-20 translate-y-20">
-            <div className="text-[6rem] md:text-[9rem] lg:text-[12rem] font-black whitespace-nowrap text-gray-800/15 select-none tracking-wide">
+          {/* Creative Text - Offset */}
+          <div className="absolute inset-0 flex items-center justify-center translate-x-8 translate-y-8 sm:translate-x-16 sm:translate-y-16">
+            <div className="text-[2.5rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[9rem] xl:text-[12rem] font-black whitespace-nowrap text-gray-800/10 sm:text-gray-800/15 select-none tracking-wide">
               CREATIVE
             </div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center -translate-x-32 -translate-y-16">
-            <div className="text-[5rem] md:text-[8rem] lg:text-[10rem] font-black whitespace-nowrap text-gray-800/10 select-none">
+          {/* Designer Text - Offset Negative */}
+          <div className="absolute inset-0 flex items-center justify-center -translate-x-8 -translate-y-6 sm:-translate-x-16 sm:-translate-y-12">
+            <div className="text-[2rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[7rem] xl:text-[10rem] font-black whitespace-nowrap text-gray-800/8 sm:text-gray-800/10 select-none">
               DESIGNER
             </div>
           </div>
@@ -101,12 +133,12 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center justify-center w-full"
         >
-          {/* Image Container - Centered */}
-          <div className="flex justify-center items-center w-full mb-5 sm:mb-6 md:mb-8">
+          {/* Image Container - Bigger & Centered */}
+          <div className="flex justify-center items-center w-full mb-6 sm:mb-7 md:mb-8">
             <motion.div
               style={{
-                rotateX: isMobile ? 0 : rotateX,
-                rotateY: isMobile ? 0 : rotateY,
+                rotateX: rotateX,
+                rotateY: rotateY,
                 transformStyle: "preserve-3d",
               }}
               className="relative inline-block"
@@ -124,7 +156,8 @@ const Hero = () => {
                 }}
               />
               
-              <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_20px_rgba(234,179,8,0.3)] sm:shadow-[0_0_30px_rgba(234,179,8,0.3)] mx-auto">
+              {/* Adaptive Image Size */}
+              <div className={`relative ${imageSize} rounded-full overflow-hidden border-2 border-yellow-500/50 shadow-[0_0_30px_rgba(234,179,8,0.4)] sm:shadow-[0_0_40px_rgba(234,179,8,0.4)] mx-auto`}>
                 <img
                   src={images[imageIndex]}
                   alt="Rohit Tiwari"
