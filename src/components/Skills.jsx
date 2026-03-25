@@ -25,25 +25,27 @@ const Skills = () => {
   ]
 
   return (
-    <section id="skills" className="py-16 md:py-20 relative overflow-hidden">
+    <section id="skills" className="py-16 md:py-20 relative overflow-hidden bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-            My <span className="text-gradient">Skills</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
+            My <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Skills</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
-          <p className="text-gray-300 mt-3 md:mt-4 text-sm md:text-base max-w-2xl mx-auto">
+          <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-500 to-transparent mx-auto mt-4"></div>
+          <p className="text-gray-500 mt-4 text-sm md:text-base max-w-2xl mx-auto">
             Technologies and tools I work with to bring ideas to life
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Skills Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
@@ -51,15 +53,25 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="glass-effect rounded-xl p-4 md:p-6 hover-glow"
+              whileHover={{ y: -5 }}
+              className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-5 md:p-6 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(234,179,8,0.1)] group"
             >
-              <div className="text-3xl md:text-4xl mb-2 md:mb-3">{category.icon}</div>
-              <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">{category.title}</h3>
-              <div className="flex flex-wrap gap-1.5 md:gap-2">
+              {/* Icon with hover effect */}
+              <div className="text-3xl md:text-4xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                {category.icon}
+              </div>
+              
+              {/* Category Title */}
+              <h3 className="text-lg md:text-xl font-bold mb-4 md:mb-5 text-white group-hover:text-yellow-400 transition-colors">
+                {category.title}
+              </h3>
+              
+              {/* Skills Tags */}
+              <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill, i) => (
                   <span
                     key={i}
-                    className="px-2 py-1 md:px-3 md:py-1.5 bg-white/5 rounded-full text-xs md:text-sm text-gray-300 hover:bg-purple-500/20 transition-colors"
+                    className="px-3 py-1.5 bg-gray-800/50 rounded-full text-xs md:text-sm text-gray-400 hover:bg-yellow-500/20 hover:text-yellow-400 transition-all duration-300 cursor-pointer border border-gray-700 hover:border-yellow-500/50"
                   >
                     {skill}
                   </span>

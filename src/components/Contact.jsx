@@ -50,20 +50,21 @@ const Contact = () => {
   ]
 
   return (
-    <section id="contact" className="py-16 md:py-20 relative overflow-hidden">
+    <section id="contact" className="py-16 md:py-20 relative overflow-hidden bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-            Get In <span className="text-gradient">Touch</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
+            Get In <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Touch</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
-          <p className="text-gray-300 mt-3 md:mt-4 text-sm md:text-base max-w-2xl mx-auto px-4">
+          <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-500 to-transparent mx-auto mt-4"></div>
+          <p className="text-gray-500 mt-4 text-sm md:text-base max-w-2xl mx-auto">
             Have a project in mind? Let's work together and create something amazing!
           </p>
         </motion.div>
@@ -75,12 +76,14 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="glass-effect rounded-xl p-5 md:p-8"
+            className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-5 md:p-8 hover:border-yellow-500/50 transition-all duration-300"
           >
-            <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Send me a message</h3>
+            <h3 className="text-xl md:text-2xl font-black tracking-tight mb-4 md:mb-6 text-white">
+              Send me a message
+            </h3>
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-400 uppercase tracking-wide">
                   Name
                 </label>
                 <input
@@ -90,12 +93,12 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-purple-500 transition-colors text-sm md:text-base"
+                  className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-400 uppercase tracking-wide">
                   Email
                 </label>
                 <input
@@ -105,12 +108,12 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-purple-500 transition-colors text-sm md:text-base"
+                  className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="john@example.com"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-400 uppercase tracking-wide">
                   Message
                 </label>
                 <textarea
@@ -120,20 +123,23 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-purple-500 transition-colors resize-none text-sm md:text-base"
+                  className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all resize-none text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="Your message here..."
                 ></textarea>
               </div>
-              <button
+              <motion.button
                 type="submit"
-                className="w-full group relative px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-semibold text-sm md:text-base overflow-hidden transition-all duration-300 hover-glow"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full group relative px-6 md:px-8 py-3 md:py-3.5 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg text-black font-bold text-sm md:text-base uppercase tracking-wide overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)]"
               >
                 <span className="relative z-10 flex items-center justify-center space-x-2">
                   <span>✉️</span>
                   <span>Send Message</span>
+                  <span>→</span>
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-              </button>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+              </motion.button>
             </form>
           </motion.div>
 
@@ -145,43 +151,53 @@ const Contact = () => {
             viewport={{ once: true }}
             className="space-y-6 md:space-y-8"
           >
-            <div className="glass-effect rounded-xl p-5 md:p-8">
-              <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Contact Information</h3>
+            <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-5 md:p-8 hover:border-yellow-500/50 transition-all duration-300">
+              <h3 className="text-xl md:text-2xl font-black tracking-tight mb-4 md:mb-6 text-white">
+                Contact Information
+              </h3>
               <div className="space-y-4 md:space-y-6">
                 {contactInfo.map((info, index) => (
-                  <div key={index} className="flex items-center space-x-3 md:space-x-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
+                  <motion.div 
+                    key={index} 
+                    whileHover={{ x: 5 }}
+                    className="flex items-center space-x-3 md:space-x-4 group"
+                  >
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 flex items-center justify-center text-xl md:text-2xl flex-shrink-0 shadow-lg">
                       {info.icon}
                     </div>
                     <div>
-                      <p className="text-xs md:text-sm text-gray-400">{info.title}</p>
+                      <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wide">{info.title}</p>
                       {info.link ? (
-                        <a href={info.link} className="text-white hover:text-purple-400 transition-colors text-sm md:text-base break-all">
+                        <a href={info.link} className="text-white hover:text-yellow-400 transition-colors text-sm md:text-base break-all group-hover:text-yellow-400">
                           {info.value}
                         </a>
                       ) : (
                         <p className="text-white text-sm md:text-base">{info.value}</p>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            <div className="glass-effect rounded-xl p-5 md:p-8">
-              <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Connect With Me</h3>
+            <div className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 rounded-xl p-5 md:p-8 hover:border-yellow-500/50 transition-all duration-300">
+              <h3 className="text-xl md:text-2xl font-black tracking-tight mb-4 md:mb-6 text-white">
+                Connect With Me
+              </h3>
               <div className="flex space-x-3 md:space-x-4">
                 {socialLinks.map((social, index) => (
-                  <a
+                  <motion.a
                     key={index}
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-full glass-effect flex items-center justify-center hover:bg-purple-500/20 transition-all duration-300 hover-glow text-base md:text-xl"
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-800/50 border border-gray-700 flex items-center justify-center hover:bg-yellow-500/20 hover:border-yellow-500/50 transition-all duration-300 text-base md:text-xl text-gray-400 hover:text-yellow-400"
                     aria-label={social.label}
                   >
                     {social.icon}
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>

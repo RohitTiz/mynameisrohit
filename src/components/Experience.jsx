@@ -43,25 +43,27 @@ const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="py-16 md:py-20 relative overflow-hidden">
+    <section id="experience" className="py-16 md:py-20 relative overflow-hidden bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-            Work <span className="text-gradient">Experience</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
+            Work <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Experience</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+          <div className="w-16 h-[2px] bg-gradient-to-r from-yellow-500 to-transparent mx-auto mt-4"></div>
         </motion.div>
 
         {/* Experience Timeline */}
         <div className="mb-12 md:mb-16">
           <div className="relative">
-            <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500"></div>
+            {/* Timeline Line - Yellow */}
+            <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-yellow-500 via-yellow-600 to-yellow-500"></div>
 
             {experiences.map((exp, index) => (
               <motion.div
@@ -74,20 +76,27 @@ const Experience = () => {
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 z-10">
-                  <div className="absolute inset-0 rounded-full animate-ping bg-purple-500 opacity-75"></div>
+                {/* Timeline Dot - Yellow */}
+                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 z-10">
+                  <div className="absolute inset-0 rounded-full animate-ping bg-yellow-500 opacity-75"></div>
                 </div>
 
+                {/* Content Card */}
                 <div className="md:w-1/2 pl-6 md:pl-0">
-                  <div className={`glass-effect p-4 md:p-6 rounded-xl ${
-                    index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'
-                  } hover-glow`}>
-                    <div className="flex items-center space-x-2 text-purple-400 mb-2 md:mb-3">
+                  <motion.div 
+                    whileHover={{ y: -5 }}
+                    className={`backdrop-blur-sm bg-gray-900/30 border border-gray-800 p-4 md:p-6 rounded-xl ${
+                      index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'
+                    } hover:border-yellow-500/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(234,179,8,0.1)]`}
+                  >
+                    <div className="flex items-center space-x-2 text-yellow-500 mb-2 md:mb-3">
                       <span className="text-lg md:text-xl">💼</span>
-                      <span className="text-xs md:text-sm font-semibold">{exp.company}</span>
+                      <span className="text-xs md:text-sm font-semibold uppercase tracking-wide">{exp.company}</span>
                     </div>
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2">{exp.title}</h3>
-                    <div className="flex items-center space-x-3 md:space-x-4 text-xs md:text-sm text-gray-400 mb-3 md:mb-4">
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-black tracking-tight mb-2 text-white">
+                      {exp.title}
+                    </h3>
+                    <div className="flex items-center space-x-3 md:space-x-4 text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
                       <div className="flex items-center space-x-1">
                         <span>📅</span>
                         <span>{exp.period}</span>
@@ -99,13 +108,13 @@ const Experience = () => {
                     </div>
                     <ul className="space-y-1.5 md:space-y-2">
                       {exp.description.map((item, i) => (
-                        <li key={i} className="text-gray-300 text-xs md:text-sm flex items-start space-x-2">
-                          <span className="text-purple-400 mt-1">•</span>
+                        <li key={i} className="text-gray-400 text-xs md:text-sm flex items-start space-x-2">
+                          <span className="text-yellow-500 mt-1">▹</span>
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ))}
@@ -120,14 +129,18 @@ const Experience = () => {
           viewport={{ once: true }}
           className="mb-12 md:mb-16"
         >
-          <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center">
-            🏅 <span className="text-gradient">Achievements</span>
+          <h3 className="text-xl md:text-2xl font-black tracking-tight mb-6 md:mb-8 text-center">
+            🏅 <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Achievements</span>
           </h3>
           <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
             {achievements.map((achievement, index) => (
-              <div key={index} className="glass-effect p-3 md:p-4 rounded-lg">
-                <p className="text-gray-300 text-xs md:text-sm">{achievement}</p>
-              </div>
+              <motion.div 
+                key={index}
+                whileHover={{ scale: 1.02 }}
+                className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 p-3 md:p-4 rounded-lg hover:border-yellow-500/50 transition-all duration-300"
+              >
+                <p className="text-gray-400 text-xs md:text-sm">{achievement}</p>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -139,23 +152,24 @@ const Experience = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center">
-            📜 <span className="text-gradient">Certifications</span>
+          <h3 className="text-xl md:text-2xl font-black tracking-tight mb-6 md:mb-8 text-center">
+            📜 <span className="bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Certifications</span>
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {certifications.map((cert, index) => (
-              <a
+              <motion.a
                 key={index}
                 href={cert.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-effect p-3 md:p-4 rounded-lg hover-glow transition-all"
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="backdrop-blur-sm bg-gray-900/30 border border-gray-800 p-3 md:p-4 rounded-lg hover:border-yellow-500/50 hover:shadow-[0_0_20px_rgba(234,179,8,0.1)] transition-all duration-300 cursor-pointer block"
               >
                 <div className="text-xl md:text-2xl mb-1 md:mb-2">📄</div>
-                <h4 className="font-semibold text-sm md:text-base mb-1">{cert.name}</h4>
-                <p className="text-gray-400 text-xs">{cert.issuer}</p>
-                <p className="text-purple-400 text-xs mt-1">{cert.date}</p>
-              </a>
+                <h4 className="font-bold text-sm md:text-base mb-1 text-white group-hover:text-yellow-400">{cert.name}</h4>
+                <p className="text-gray-500 text-xs">{cert.issuer}</p>
+                <p className="text-yellow-500/70 text-xs mt-1">{cert.date}</p>
+              </motion.a>
             ))}
           </div>
         </motion.div>
