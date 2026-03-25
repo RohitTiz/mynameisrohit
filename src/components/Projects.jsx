@@ -1,40 +1,22 @@
 import { motion } from 'framer-motion'
+import GlassCard from './ui/GlassCard'
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "Online Course Selling Platform",
-      description: "Fully responsive course-selling website built for WingEducation assessment. Pixel-perfect implementation from Figma design with interactive UI elements.",
-      tech: ["React.js", "Tailwind CSS", "JavaScript", "Figma"],
-      github: "https://github.com/RohitTiz/wingsix",
-      live: "https://assessment-wings-education-bxm.vercel.app/",
-      image: "https://via.placeholder.com/600x400/1a1a2e/ffffff?text=Course+Platform"
-    },
-    {
-      title: "Personal Portfolio - La Flame Theme",
-      description: "Creative portfolio inspired by Travis Scott's aesthetic. Features GSAP animations, scroll transitions, and immersive design.",
-      tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-      github: "https://github.com/RohitTiz/Travis-portfolio",
-      live: "https://rohittiz.github.io/Travis-portfolio/",
-      image: "https://via.placeholder.com/600x400/1a1a2e/ffffff?text=La+Flame+Portfolio"
-    },
-    {
-      title: "Digital Gardens - SIH Hackathon",
-      description: "Top 5 in SIH Internal Hackathon. Website featuring database of plant species with custom UI/UX design and React implementation.",
-      tech: ["React.js", "TailwindCSS", "Node.js", "MongoDB"],
-      github: "https://github.com/RohitTiz",
-      live: "#",
-      image: "https://via.placeholder.com/600x400/1a1a2e/ffffff?text=Digital+Gardens"
-    },
-    {
-      title: "UI/UX Design Projects",
-      description: "Multiple website prototypes and mobile designs created during UI/UX certification course using Figma.",
-      tech: ["Figma", "Wireframing", "Prototyping", "User Research"],
-      github: "https://github.com/RohitTiz",
-      live: "#",
-      image: "https://via.placeholder.com/600x400/1a1a2e/ffffff?text=UI+UX+Projects"
-    }
-  ]
+  const project = {
+    title: "Online Course Selling Platform - WingEducation",
+    description: "A fully functional online course marketplace built for WingEducation. Users can browse, filter, and purchase courses with a seamless checkout experience. Features include course listings, detailed course pages, user authentication, and responsive design.",
+    tech: ["React.js", "Tailwind CSS", "JavaScript", "Vite", "Netlify"],
+    github: "https://github.com/RohitTiz/wingseven",
+    live: "https://wingeducation.netlify.app/",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop",
+    features: [
+      "🎓 Course browsing with categories",
+      "📱 Fully responsive design",
+      "🔐 User authentication",
+      "💳 Course enrollment system",
+      "⭐ Interactive UI components"
+    ]
+  }
 
   return (
     <section id="projects" className="py-16 md:py-20 relative overflow-hidden">
@@ -47,59 +29,107 @@ const Projects = () => {
           className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-            Featured <span className="text-gradient">Projects</span>
+            Featured <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Project</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
           <p className="text-gray-300 mt-3 md:mt-4 text-sm md:text-base max-w-2xl mx-auto">
-            Here are some of my recent projects that showcase my skills and creativity
+            Here's a project I built during my internship at WingEducation
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="glass-effect rounded-xl overflow-hidden hover-glow cursor-pointer group"
-            >
-              <div className="relative overflow-hidden h-40 md:h-48">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-3 md:p-4">
-                  <div className="flex space-x-3 md:space-x-4">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="bg-white/20 backdrop-blur-md p-2 rounded-full hover:bg-white/30 transition-colors text-lg md:text-xl">
-                      🔗
-                    </a>
-                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="bg-white/20 backdrop-blur-md p-2 rounded-full hover:bg-white/30 transition-colors text-lg md:text-xl">
-                      🌐
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 md:p-6">
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-2">{project.title}</h3>
-                <p className="text-gray-300 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2">{project.description}</p>
-                <div className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="glass-card overflow-hidden hover-glow group"
+          >
+            {/* Project Image */}
+            <div className="relative overflow-hidden h-56 md:h-64 lg:h-80">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
+                <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech, i) => (
-                    <span key={i} className="glass-effect text-xs px-2 py-1 rounded-full">
+                    <span key={i} className="backdrop-blur-md bg-white/20 px-2 py-1 md:px-3 md:py-1.5 rounded-full text-xs md:text-sm">
                       {tech}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center space-x-2 text-purple-400 text-xs md:text-sm">
-                  <span>💻</span>
-                  <span>View Project Details</span>
+              </div>
+              <div className="absolute top-4 right-4 flex space-x-2">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="backdrop-blur-md bg-black/50 p-2 rounded-full hover:bg-purple-500/80 transition-all text-lg md:text-xl"
+                  aria-label="GitHub Repository"
+                >
+                  🔗
+                </a>
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="backdrop-blur-md bg-black/50 p-2 rounded-full hover:bg-purple-500/80 transition-all text-lg md:text-xl"
+                  aria-label="Live Demo"
+                >
+                  🌐
+                </a>
+              </div>
+            </div>
+
+            {/* Project Info */}
+            <div className="p-5 md:p-8">
+              <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3">{project.title}</h3>
+              <p className="text-gray-300 text-sm md:text-base mb-4">{project.description}</p>
+              
+              {/* Features List */}
+              <div className="mb-6">
+                <h4 className="text-purple-400 font-semibold mb-2 text-sm md:text-base">✨ Key Features:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {project.features.map((feature, i) => (
+                    <div key={i} className="flex items-center space-x-2 text-gray-300 text-xs md:text-sm">
+                      <span className="text-purple-400">{feature.split(' ')[0]}</span>
+                      <span>{feature.split(' ').slice(1).join(' ')}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative px-6 py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-semibold text-sm md:text-base overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:scale-105 text-center"
+                >
+                  <span className="relative z-10 flex items-center justify-center space-x-2">
+                    <span>🚀</span>
+                    <span>View Live Demo</span>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                </a>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 md:px-8 md:py-3 backdrop-blur-md bg-white/5 border border-white/10 rounded-full text-white font-semibold text-sm md:text-base hover:bg-white/10 transition-all duration-300 text-center"
+                >
+                  <span className="flex items-center justify-center space-x-2">
+                    <span>📁</span>
+                    <span>View Source Code</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
