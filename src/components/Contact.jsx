@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import axios from 'axios'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,12 +8,43 @@ const Contact = () => {
     email: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    alert('Thank you for reaching out! I will get back to you soon.')
-    setFormData({ name: '', email: '', message: '' })
+    setIsSubmitting(true)
+    setSubmitStatus({ type: '', message: '' })
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/contacts', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (response.data.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: '✓ Message sent successfully! I will get back to you soon.'
+        })
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: response.data.message || 'Something went wrong. Please try again.'
+        })
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus({
+        type: 'error',
+        message: error.response?.data?.message || 'Network error. Please check if backend is running.'
+      })
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setSubmitStatus({ type: '', message: '' }), 5000)
+    }
   }
 
   const handleChange = (e) => {
@@ -81,6 +113,18 @@ const Contact = () => {
             <h3 className="text-xl md:text-2xl font-black tracking-tight mb-4 md:mb-6 text-white">
               Send me a message
             </h3>
+            
+            {/* Status Message */}
+            {submitStatus.message && (
+              <div className={`mb-4 p-3 rounded-lg text-sm ${
+                submitStatus.type === 'success' 
+                  ? 'bg-green-500/20 border border-green-500/50 text-green-400' 
+                  : 'bg-red-500/20 border border-red-500/50 text-red-400'
+              }`}>
+                {submitStatus.message}
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-400 uppercase tracking-wide">
@@ -95,6 +139,7 @@ const Contact = () => {
                   required
                   className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="John Doe"
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -110,6 +155,7 @@ const Contact = () => {
                   required
                   className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="john@example.com"
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -125,18 +171,31 @@ const Contact = () => {
                   rows={4}
                   className="w-full px-4 md:px-5 py-2.5 md:py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/50 transition-all resize-none text-sm md:text-base text-white placeholder-gray-500"
                   placeholder="Your message here..."
+                  disabled={isSubmitting}
                 ></textarea>
               </div>
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full group relative px-6 md:px-8 py-3 md:py-3.5 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg text-black font-bold text-sm md:text-base uppercase tracking-wide overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)]"
+                disabled={isSubmitting}
+                className={`w-full group relative px-6 md:px-8 py-3 md:py-3.5 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg text-black font-bold text-sm md:text-base uppercase tracking-wide overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] ${
+                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
               >
                 <span className="relative z-10 flex items-center justify-center space-x-2">
-                  <span>✉️</span>
-                  <span>Send Message</span>
-                  <span>→</span>
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>✉️</span>
+                      <span>Send Message</span>
+                      <span>→</span>
+                    </>
+                  )}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
               </motion.button>
